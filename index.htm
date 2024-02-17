@@ -3,75 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fullscreen Video</title>
+  <title>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</title>
   <style>
-    body {
-      margin: 0;
-      overflow: hidden;
+    /* Hide default controls */
+    #fullscreen-video::-webkit-media-controls {
+      display:none !important;
     }
-    video {
-      width: 100vw;
-      height: 100vh;
+    #fullscreen-video::-webkit-media-controls-enclosure {
+      display:none !important;
+    }
+    #fullscreen-video::-webkit-media-controls-panel {
+      display:none !important;
     }
   </style>
 </head>
 <body>
 
-<video controls onclick="toggleFullScreen()">
-  <source src="AAAA.avi" type="video/avi">
+<video id="fullscreen-video" width="100%" height="100%" autoplay>
+  <source src="AAAA.avi" type="video/x-msvideo">
   Your browser does not support the video tag.
 </video>
 
 <script>
-  const video = document.querySelector('video');
-  let fullscreenTimeout;
-  let unsavedChanges = false;
+  document.addEventListener("DOMContentLoaded", function() {
+    var video = document.getElementById("fullscreen-video");
 
-  function toggleFullScreen() {
-    if (document.fullscreenElement || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement) {
-      // Check for unsaved changes before exiting fullscreen
-      if (unsavedChanges && confirm("You have unsaved changes. Do you want to save before exiting fullscreen?")) {
-        // Save changes logic goes here (if needed)
-        unsavedChanges = false;
-      }
-    }
-
+    // Enter fullscreen mode
     if (video.requestFullscreen) {
       video.requestFullscreen();
     } else if (video.mozRequestFullScreen) {
       video.mozRequestFullScreen();
     } else if (video.webkitRequestFullscreen) {
       video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) {
+      video.msRequestFullscreen();
     }
-
-    // Event listener for exit fullscreen
-    document.addEventListener('fullscreenchange', exitHandler);
-    document.addEventListener('webkitfullscreenchange', exitHandler);
-    document.addEventListener('mozfullscreenchange', exitHandler);
-    document.addEventListener('MSFullscreenChange', exitHandler);
-  }
-
-  function exitHandler() {
-    if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-      // Handle exit fullscreen
-      if (unsavedChanges && confirm("You have unsaved changes. Do you want to save before exiting fullscreen?")) {
-        // Save changes logic goes here (if needed)
-        unsavedChanges = false;
-      }
-
-      clearTimeout(fullscreenTimeout);
-      fullscreenTimeout = setTimeout(() => {
-        toggleFullScreen();
-      }, 5000); // Adjust the time in milliseconds (here set to 5000ms or 5 seconds)
-    }
-  }
-
-  // Example function for unsaved changes (you can customize this as needed)
-  function markChanges() {
-    unsavedChanges = true;
-    alert("Changes marked as unsaved.");
-  }
+  });
 </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
